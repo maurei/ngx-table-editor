@@ -650,7 +650,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-basic-ng-model></app-basic-ng-model>\n<app-basic-form-control></app-basic-form-control>\n<div class=\"card\">\n\t<div class=\"card-block\">\n\t\t<p class=\"lead\"><strong>OK, cool, now what?</strong>\n\t\t<p class=\"card-text\">You probably want to do something with the data. For this, see section 3.</p>\n\t</div>\n</div>"
+module.exports = "<app-basic-ng-model></app-basic-ng-model>\n<app-basic-form-control></app-basic-form-control>"
 
 /***/ }),
 
