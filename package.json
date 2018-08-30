@@ -1,0 +1,17 @@
+{
+  "name": "ngx-table-editor",
+  "version": "1.0.0",
+  "description": "A library for Angular that transforms HTML tables into dynamic editable components.",
+  "main": "index.js",
+  "scripts": {
+    "compodoc": "compodoc --disableInternal -p tsconfig.json -s --theme material --hideGenerator --output ./docs/documentation",
+    "build:packages": "cd ./core && npm run pack:lib && cd ../extras && npm install --save ../core.tgz && npm run pack:lib",
+    "build:demo": "cd demo && ng build --base-href=/ngx-table-editor/demo/ && rm -rf ../docs/demo/* && mv ./dist/demo/* ../docs/demo",
+    "build:demolocal": "cd demo && ng build --base-href=/docs/demo/ && rm -rf ../docs/demo/* && mv ./dist/demo/* ../docs/demo"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@compodoc/compodoc": "^1.1.5"
+  }
+}

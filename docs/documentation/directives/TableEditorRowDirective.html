@@ -1,0 +1,368 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-table-editor documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ngx-table-editor documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li>TableEditorRowDirective</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>core/src/table/row.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Place this directive on the &#39;tr&#39; elements in a table that has a <code>tableEditor</code> directive:</p>
+<div><pre class="line-numbers"><code class="language-html">....
+&lt;tbody&gt;
+    &lt;tr *ngFor=&#39;let row in rows&#39; teRow [teContext]=&#39;row.someContextVariable&#39;&gt;
+            ....
+    &lt;/tr&gt;
+&lt;/tbody&gt;
+....</code></pre></div><p>This directive only works in combination with <code>[teCell]</code> directives placed on <code>HTMLTableCellElement</code>s and <code>[tableEditor]</code> directive placed on <code>HTMLTablelement</code>s. See the <a href="../../demo/#/examples/basic">examples</a> for a guide how to use it.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="https://angular.io/api/core/AfterContentInit" target="_blank" >AfterContentInit</a></code>
+                        <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>tr[teRow]</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cells">cells</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#teContext">teContext</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="teContext"></a>
+                        <code>teContext</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>Use this input attribute to pass along any context variable in a <a href="../classes/RowChangeEvent.html">RowChangeEvent</a> </p>
+</div>
+                            <p>
+                            <em>Type :</em>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">core/src/table/row.directive.ts:26</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cells"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            cells
+                            </b>
+                            <a href="#cells"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>cells:     <code><a href="../injectables/AbstractTableCell.html" target="_self" >AbstractTableCell[]</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../injectables/AbstractTableCell.html" target="_self" >AbstractTableCell[]</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">core/src/table/row.directive.ts:30</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>All CellControlValueAccessors within a row. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Directive, ContentChildren, QueryList, AfterContentInit, EventEmitter, Input, ViewContainerRef, OnDestroy } from &#x27;@angular/core&#x27;;
+import { AbstractTableCell } from &#x27;../control-value-accessors/abstract-table-cell&#x27;;
+import { TeExecutor } from &#x27;./table.directive&#x27;;
+import { NgControl } from &#x27;@angular/forms&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+
+/**
+ * Place this directive on the &#x27;tr&#x27; elements in a table that has a &#x60;tableEditor&#x60; directive:
+* &#x60;&#x60;&#x60;html
+....
+&lt;tbody&gt;
+	&lt;tr *ngFor&#x3D;&#x27;let row in rows&#x27; teRow [teContext]&#x3D;&#x27;row.someContextVariable&#x27;&gt;
+			....
+	&lt;/tr&gt;
+&lt;/tbody&gt;
+....
+&#x60;&#x60;&#x60;
+ * This directive only works in combination with &#x60;[teCell]&#x60; directives placed on &#x60;HTMLTableCellElement&#x60;s and &#x60;[tableEditor]&#x60; directive placed on &#x60;HTMLTablelement&#x60;s. See the [examples]{@link ../../demo/#/examples/basic} for a guide how to use it.
+ */
+@Directive({
+	selector: &#x27;tr[teRow]&#x27;
+})
+export class TableEditorRowDirective implements AfterContentInit, OnDestroy {
+	/** Use this input attribute to pass along any context variable in a {@link RowChangeEvent} */
+	@Input(&#x27;teContext&#x27;)
+	public context: any;
+	/** @internal An &#x60;EventEmitter&#x60; used internally to progagate a &#x60;TeCellClick&#x60; event to {@link TableEditorDirective} */
+	public teCellClick: EventEmitter&lt;TeExecutor&gt; &#x3D; new EventEmitter();
+	/** All CellControlValueAccessors within a row. */
+	public cells: AbstractTableCell[];
+	/** @internal An &#x60;EventEmitter&#x60; used internally to progagate a TeBlockNavigation event to {@link TableEditorDirective} */
+	public teBlockNavigationEventEmitter: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
+	/** @internal */
+	@ContentChildren(NgControl)
+	private _cells: QueryList&lt;NgControl&gt;;
+	/** @internal */
+	private subscriptions: Array&lt;Subscription&gt; &#x3D; [];
+	/** @internal */
+	constructor(private vc: ViewContainerRef) {}
+	/** @internal */
+	public ngAfterContentInit(): void {
+		this.cells &#x3D; this._cells.toArray().map((c: NgControl) &#x3D;&gt; c.valueAccessor as AbstractTableCell);
+		this.cells.forEach(cell &#x3D;&gt; {
+			const clickSubscriber &#x3D; cell.teCellClick.subscribe((triggeredCell: AbstractTableCell) &#x3D;&gt; {
+				const executor: TeExecutor &#x3D; {row: null, cell: null};
+				executor.row &#x3D; this;
+				executor.cell &#x3D; triggeredCell;
+				this.teCellClick.emit(executor);
+			});
+			const blockSubscriber &#x3D; cell.teBlockNavigationEventEmitter.subscribe(() &#x3D;&gt; {
+				this.teBlockNavigationEventEmitter.emit();
+			});
+			this.subscriptions.push(clickSubscriber);
+			this.subscriptions.push(blockSubscriber);
+		});
+	}
+
+	/** @internal */
+	public ngOnDestroy() {
+		if (this.subscriptions) this.subscriptions.forEach(s &#x3D;&gt; s.unsubscribe());
+		this.teCellClick.complete();
+		this.vc.clear();
+	}
+	/** @internal This method is exposed publically because it is used by {@link TableEditorDirective}. Do not call it manually. */
+	public inputify() {
+		this.cells.forEach(c &#x3D;&gt; {
+			c.inputify();
+		});
+	}
+	/** @internal This method is exposed publically because it is used by {@link TableEditorDirective}. Do not call it manually. */
+	public cellify() {
+		this.cells.forEach(c &#x3D;&gt; {
+			c.cellify();
+		});
+	}
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'TableEditorRowDirective.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

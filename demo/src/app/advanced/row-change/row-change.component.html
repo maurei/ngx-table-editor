@@ -1,0 +1,85 @@
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">Row Change Event, Validation, Trigger and Disabled Cells</h4>
+    <h6 class="card-subtitle mb-2 text-muted">Putting together some moving parts</h6>
+    <p class="card-text">Everytime when a user changes from one row to another, a <code>RowChangeEvent</code> is emitted. This can be listened to by binding to the <code>rowChange</code> attribute on the <code>table</code> element.</p>
+    <p class="card-text">Also, it is possible to supply a <code>teRow</code> with a reference to a context variable, by using the <code>[teContext]</code> attribute. This will for example may come in handy when using Angulars built-in validation methods. See the template how a reference to the <code>NgForm</code> instance is passed along to the <code>rowChange</code> event.</p>
+    <p>It is also possible to use the <code>RowChangeEvent</code> to implement custom hooks. As an example, we've implemented an onExitHook that adds a new record to the table when exiting the border from the bottom. It requires us to query the instances of <code>TableEditorDirective</code> and <code>TableEditorRowDirective</code>.</p>
+    <p>Lastly, it is possible to disable editing of cells on a individual level. To see this, play around with the toggle below.</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item" (click)='switchView("table")'>
+        <a class="nav-link" [ngClass]='{active: view === "table"}'>Example</a>
+      </li>
+      <li class="nav-item" (click)='switchView("html")'>
+        <a class="nav-link" [ngClass]='{active: view === "html"}'>HTML</a>
+      </li>
+      <li class="nav-item" (click)='switchView("ts")'>
+        <a class="nav-link" [ngClass]='{active: view === "ts"}'>TS</a>
+      </li>
+      <li class="nav-item" (click)='switchView("css")'>
+        <a class="nav-link" [ngClass]='{active: view === "css"}'>CSS</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-block" *ngIf="view === 'table'">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary" [ngClass]='{active: disabledMode}'>
+        <input type="radio" [value]='true' [(ngModel)]="disabledMode"> Disable
+      </label>
+      <label class="btn btn-secondary" [ngClass]='{active: !disabledMode}'>
+        <input type="radio" [value]='false' [(ngModel)]="disabledMode"> Enable
+      </label>
+    </div>
+    <table tableEditor class='table' (rowChange)=onRowChange($event)>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Family</th>
+          <th>Age</th>
+          <th>Company</th>
+          <th>Birthday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr teRow ngForm #rowForm='ngForm' *ngFor='let row of rows; let i = index' [teContext]=rowForm>
+          <td teCell [teDisabled]=isDisabled(i) [(ngModel)]=row.givenName name='givenName'>>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell [teDisabled]=isDisabled(i)  [(ngModel)]=row.familyName name='familyName'>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell [teDisabled]=isDisabled(i) [(ngModel)]=row.age name='age'>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell [teDisabled]='isDisabled(i) || disabledMode' [(ngModel)]=row.company name='company'>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell [teDisabled]=isDisabled(i) [(ngModel)]=row.birthday name='birthday'>
+            <ng-container teAnchor></ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Row change events:
+      <markdown [data]="viewJson | language : 'json'"></markdown>
+    </p>
+
+  </div>
+  <div class="card-block" *ngIf="view === 'html'">
+    <markdown [data]="viewHtml| language : 'markup'"></markdown>
+    <p>Note! Do not forget to put the <code>NgContainer</code> element with the <code>teAnchor</code> directive inside the table
+      cell: <markdown [data]="htmlNote | language : 'markup'"></markdown>
+    </p>
+  </div>
+  <div class="card-block" *ngIf="view === 'ts'">
+    <markdown [data]="viewTs | language : 'typescript'"></markdown>
+  </div>
+  <div class="card-block" *ngIf="view === 'css'">
+    The input elements are positioned by some javascript code, <a href="/ngx-table-editor/documentation">see the API docs</a>. This requires the table to be positioned relative, and the inputs to be positioned absolute.
+    <markdown [data]="viewCss | language : 'scss'"></markdown>
+  </div>
+</div>

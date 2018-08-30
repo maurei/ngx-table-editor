@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "inlineSources": true,
+        "noEmitHelpers": false,
+        "noImplicitAny": true,
+        "declaration": true,
+        "skipLibCheck": false,
+        "stripInternal": true,
+        "strictNullChecks": false,
+        "allowSyntheticDefaultImports": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "rootDir": ".",
+        "baseUrl": ".",
+        "paths": {
+            "@angular/*": [
+                "../../node_modules/@angular/*"
+            ],
+            "@rxjs/*": [
+                "../../node_modules/rxjs/*"
+            ],
+            "ngx-table-editor-dev": [
+                "../../core/src/index"
+            ]
+        },
+        "outDir": "../",
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "moduleResolution": "node",
+        "module": "es2015",
+        "target": "es2015",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "types": [],
+        "importHelpers": true
+    },
+    "files": [
+        "public_api.ts",
+        "../../node_modules/zone.js/dist/zone.js.d.ts"
+    ],
+    "angularCompilerOptions": {
+        "enableResourceInlining": true,
+        "skipTemplateCodegen": true,
+        "annotateForClosureCompiler": true,
+        "strictMetadataEmit": true,
+        "flatModuleOutFile": "ngx-table-editor-extras.js",
+        "flatModuleId": "ngx-table-editor-extras"
+    }
+}
+

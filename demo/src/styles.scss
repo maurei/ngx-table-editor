@@ -1,0 +1,68 @@
+body {
+  background-color: #ecf0f1; }
+
+nav.navbar {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px; }
+
+.jumbotron {
+  margin-top: 2em;
+  padding-top: 3em;
+  padding-bottom: 3em; }
+
+.jumbotron,
+.card {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px; }
+
+.ui-autocomplete-category {
+  font-weight: bold;
+  padding: .2em .4em;
+  margin: .8em 0 .2em;
+  line-height: 1.5; }
+
+
+.card {
+  margin-top: 2em; }
+
+  .dropdown-header {
+    color: black;
+    font-weight: strong;
+    margin-left: -10px;
+  }
+
+
+
+
+
+table {
+  position: relative;
+  input {
+      position: absolute;
+      font: inherit;
+  }
+
+}
+
+
+
+// table {
+// 	tr {
+// 		td[tecell] {
+// 			input.form-control {
+// 				background-color: black!important;
+// 				font-style: kak;
+// 			}
+// 		}
+// 	}
+// }

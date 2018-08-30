@@ -1,0 +1,251 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-table-editor documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ngx-table-editor documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li>TextCellControlValueAccessor</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>core/src/control-value-accessors/text-cell-control-value-accessor.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>The ControlValueAccessor that is instantiated for the following usage, with <code>type=&#39;text&#39;</code> or omitting the <code>type</code>:</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;tr teRow *ngFor=let row in rows&gt;
+    ....
+    &lt;td teCell type=text ([ngModel])=row.someText&gt;
+        &lt;ng-container teAnchor&gt;&lt;/ng-container&gt;
+    &lt;/td&gt;
+    &lt;td teCell ([ngModel])=row.someOtherText&gt;
+        &lt;ng-container teAnchor&gt;&lt;/ng-container&gt;
+    &lt;/td&gt;
+    ....
+&lt;/tr&gt;</code></pre></div><p>Do not forget to put <code>&lt;ng-container teAnchor&gt;&lt;/ng-container&gt;</code> inside the table elements. This is required because at this moment, it is not possible for the Angular renderer to <strong>insert</strong> elements into another element, only append as a sibling. It is thus not possible to insert into the <code>nativeElement</code> associated with and injected into the <code>teCell</code> directive.
+For this reason, we need to create a <code>ViewContainer</code> inside the <code>HTMLTableCellElement</code> and get a reference to it, which is done by <code>NgContainer</code> and <code>teAnchor</code> respecively. <a href="https://github.com/angular/angular/issues/9035">See this issue for a lengthy discussion</a>.</p>
+
+            </p>
+
+
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+                    <tr>
+                        <td class="col-md-3">Providers</td>
+                        <td class="col-md-9">
+                            <code>
+                                TE_TEXT_CELL_ACCESSOR
+                            </code>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>td[type&#x3D;text][teCell][ngModel],td:not([type])[teCell][ngModel],td[type&#x3D;text][teCell][formControl],td:not([type])[teCell][formControl],td[type&#x3D;text][teCell][formControlName],td:not([type])[teCell][formControlName]</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Directive, forwardRef } from &#x27;@angular/core&#x27;;
+import { NG_VALUE_ACCESSOR } from &#x27;@angular/forms&#x27;;
+import { AbstractTableCell } from &#x27;./abstract-table-cell&#x27;;
+
+const TE_TEXT_CELL_ACCESSOR &#x3D; {
+	provide: NG_VALUE_ACCESSOR,
+	useExisting: forwardRef(() &#x3D;&gt; TextCellControlValueAccessor),
+	multi: true
+};
+
+/**
+ * The ControlValueAccessor that is instantiated for the following usage, with &#x60;type&#x3D;&#x27;text&#x27;&#x60; or omitting the &#x60;type&#x60;:
+
+ * &#x60;&#x60;&#x60;html
+&lt;tr teRow *ngFor&#x3D;let row in rows&gt;
+	....
+	&lt;td teCell type&#x3D;text ([ngModel])&#x3D;row.someText&gt;
+		&lt;ng-container teAnchor&gt;&lt;/ng-container&gt;
+	&lt;/td&gt;
+	&lt;td teCell ([ngModel])&#x3D;row.someOtherText&gt;
+		&lt;ng-container teAnchor&gt;&lt;/ng-container&gt;
+	&lt;/td&gt;
+	....
+&lt;/tr&gt;
+&#x60;&#x60;&#x60;
+ * Do not forget to put &#x60;&lt;ng-container teAnchor&gt;&lt;/ng-container&gt;&#x60; inside the table elements. This is required because at this moment, it is not possible for the Angular renderer to **insert** elements into another element, only append as a sibling. It is thus not possible to insert into the &#x60;nativeElement&#x60; associated with and injected into the &#x60;teCell&#x60; directive.
+ * For this reason, we need to create a &#x60;ViewContainer&#x60; inside the &#x60;HTMLTableCellElement&#x60; and get a reference to it, which is done by &#x60;NgContainer&#x60; and &#x60;teAnchor&#x60; respecively. [See this issue for a lengthy discussion]{@link https://github.com/angular/angular/issues/9035}.
+ *
+ */
+@Directive({
+	selector:
+		&#x27;td[type&#x3D;text][teCell][ngModel],td:not([type])[teCell][ngModel],td[type&#x3D;text][teCell][formControl],td:not([type])[teCell][formControl],td[type&#x3D;text][teCell][formControlName],td:not([type])[teCell][formControlName]&#x27;,
+	providers: [TE_TEXT_CELL_ACCESSOR],
+	host: {
+		&#x27;(input)&#x27;: &#x27;$any(this).onChange($event.target.value)&#x27;
+	}
+})
+export class TextCellControlValueAccessor extends AbstractTableCell {
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public onChange: (_: any) &#x3D;&gt; void;
+
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public writeValue(modelVal: any): void {
+		super.setCellValue(modelVal);
+	}
+
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public registerOnChange(fn: (_: any) &#x3D;&gt; void): void {
+		this.onChange &#x3D; fn;
+	}
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public registerOnTouched(fn: () &#x3D;&gt; void): void {
+		// this.onTouched &#x3D; fn;
+	}
+
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public parser(value: any) {
+		return value;
+	}
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public cellValueFormatter(value: any) {
+		return (value &#x3D; value &#x3D;&#x3D;&#x3D; null ? &#x27;&#x27; : value);
+	}
+	/** @internal for documentation see {@link AbstractTableCell} */
+	public inputValueFormatter(value: any) {
+		return value;
+	}
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'TextCellControlValueAccessor.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

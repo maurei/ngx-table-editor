@@ -1,0 +1,18 @@
+
+::ng-deep td.ng-dirty {
+	input.form-control {
+	border-color: #d8aa2c;
+	}
+}
+
+::ng-deep tr.ng-dirty {
+	background-color:#d8aa2c42;
+	input.form-control {
+		background-color:#d8aa2c42;
+	}
+}
+
+::ng-deep td[ng-reflect-te-disabled='true'] {
+  background-color: #ffdede;
+  opacity: 0.4;
+}

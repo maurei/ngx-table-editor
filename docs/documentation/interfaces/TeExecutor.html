@@ -1,0 +1,458 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-table-editor documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ngx-table-editor documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li>TeExecutor</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>core/src/table/table.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>An interface implemented by an instruction set to trigger a movement in a <a href="../directives/TableEditorDirective.html">TableEditorDirective</a>. Both <code>row</code> and <code>cell</code> are optional. If both are left blank, the instruction set is interpreted as an exit command. If <code>cell</code> is left blank, the first enabled cell in the row will be selected. Only leaving <code>row</code> blank will throw an error.</p>
+
+            </p>
+
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#cell">cell</a>
+                                </li>
+                                <li>
+                                        <a href="#row">row</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="cell"></a>
+                                        <span class="name"><b>cell</b><a href="#cell"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>cell:     <code><a href="../injectables/AbstractTableCell.html" target="_self" >AbstractTableCell | null</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="../injectables/AbstractTableCell.html" target="_self" >AbstractTableCell | null</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="row"></a>
+                                        <span class="name"><b>row</b><a href="#row"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>row:     <code>TableEditorRowDirective | null</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>TableEditorRowDirective | null</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	Directive,
+	ContentChildren,
+	QueryList,
+	AfterContentInit,
+	IterableDiffer,
+	IterableDiffers,
+	ElementRef,
+	Output,
+	EventEmitter,
+	OnInit,
+	Renderer2,
+	OnDestroy,
+	ViewContainerRef,
+	Inject,
+	Type
+} from &#x27;@angular/core&#x27;;
+import { TableEditorRowDirective } from &#x27;./row.directive&#x27;;
+import { AbstractTableCell, CellDisabledState } from &#x27;../control-value-accessors/abstract-table-cell&#x27;;
+import { AbstractNavigator, NavigationAction, TE_NAVIGATORS } from &#x27;../navigators/navigator&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { RowChangeEvent } from &#x27;../utils/row-change-event&#x27;;
+
+/**
+ * An interface implemented by an instruction set to trigger a movement in a {@link TableEditorDirective}. Both &#x60;row&#x60; and &#x60;cell&#x60; are optional. If both are left blank, the instruction set is interpreted as an exit command. If &#x60;cell&#x60; is left blank, the first enabled cell in the row will be selected. Only leaving &#x60;row&#x60; blank will throw an error.
+ */
+export interface TeExecutor {
+	row: TableEditorRowDirective | null;
+	cell: AbstractTableCell | null;
+}
+
+/**
+ * Place this directive on the top-level &#x60;table&#x60; element:
+ * &#x60;&#x60;&#x60;html
+&lt;table tableEditor  (rowChange)&#x3D;&#x27;listener()&#x27;&gt;
+			....
+&lt;/table&gt;
+&#x60;&#x60;&#x60;
+ * This directive only works in combination with &#x60;[teCell]&#x60; directives placed on &#x60;HTMLTableCellElement&#x60;s and &#x60;[teRow]&#x60; directives placed on &#x60;HTMLTableRowElement&#x60;s. See the [examples]{@link ../../demo/#/examples/basic}.
+ */
+@Directive({
+	selector: &#x27;table[tableEditor]&#x27;
+})
+export class TableEditorDirective implements AfterContentInit, OnInit, OnDestroy {
+	/** Bind to the &#x60;rowChange&#x60; attribrute to listen to &#x60;RowChangeEvent&#x60;s, see [the details]{@link RowChangeEvent}. */
+	@Output(&#x27;rowChange&#x27;)
+	public rowChange &#x3D; new EventEmitter&lt;RowChangeEvent&lt;any&gt;&gt;();
+	/** @internal  */
+	private navigators: Array&lt;AbstractNavigator&gt;;
+	/** @internal  */
+	private currentRow: TableEditorRowDirective | null &#x3D; null;
+	/** @internal  */
+	private currentCell: AbstractTableCell | null &#x3D; null;
+	/** @internal  */
+	private differ: IterableDiffer&lt;TableEditorRowDirective&gt;;
+	/** @internal  */
+	private subscriptions: Array&lt;Subscription&gt; &#x3D; [];
+	/** @internal  */
+	private unlistenNavigators: Array&lt;() &#x3D;&gt; void&gt; &#x3D; [];
+	/** @internal  */
+	private _blockNavigation &#x3D; false;
+	/** @internal  */
+	private get blockNavigation() {
+		const rv &#x3D; this._blockNavigation;
+		this._blockNavigation &#x3D; false;
+		return rv;
+	}
+	/** @internal  */
+	private set blockNavigation(value: boolean) {
+		this._blockNavigation &#x3D; value;
+	}
+	/** @internal  */
+	@ContentChildren(TableEditorRowDirective)
+	private rows: QueryList&lt;TableEditorRowDirective&gt;;
+	/** @internal  */
+	constructor(
+		private element: ElementRef&lt;HTMLTableElement&gt;,
+		private renderer: Renderer2,
+		private differs: IterableDiffers,
+		private vc: ViewContainerRef,
+		@Inject(TE_NAVIGATORS) navigators: Array&lt;Type&lt;AbstractNavigator&gt;&gt;
+	) {
+		this.navigators &#x3D; navigators.map(ctor &#x3D;&gt; new ctor(renderer, element, this.actionParser.bind(this)));
+	}
+	/**
+	 * Use this method to programatically control the movements in the table. See the guide in the README for an example.
+	 * @param  TeExecutor target An instruction set that implements the [TeExecutor interface]{@link TeExecutor}.
+	 */
+	public trigger(target: TeExecutor) {
+		if (target.row !&#x3D; null &amp;&amp; !target.cell) {
+			if (target.row!.cells.length) {
+				target.cell &#x3D; target.row.cells[0];
+			}
+		}
+		this.executeFor(target);
+	}
+	/**
+	 * @internal @ignore
+	 * A method used internally to cellify and inputify specific rows based on an [instruction set]{@link TeExecutor}.
+	 * @param  TeExecutor target
+	 * @param  NavigationAction action
+	 */
+	private executeFor(target: TeExecutor, action: NavigationAction | null &#x3D; null) {
+		if (target.row) {
+			let currentRow: TableEditorRowDirective | null &#x3D; null;
+			if (target.row !&#x3D;&#x3D; this.currentRow) {
+				if (this.currentRow) {
+					currentRow &#x3D; this.currentRow;
+					this.currentRow.cellify();
+				}
+				target.row.inputify();
+				this.rowChange.emit(new RowChangeEvent(currentRow, target.row, action));
+				this.currentRow &#x3D; target.row;
+			}
+		} else {
+			this.currentRow!.cellify();
+			this.rowChange.emit(new RowChangeEvent(this.currentRow, null, action));
+			this.currentRow &#x3D; null;
+		}
+		if (target.cell &amp;&amp; target.cell !&#x3D;&#x3D; this.currentCell) {
+			target.cell.focus();
+			this.currentCell &#x3D; target.cell;
+		}
+	}
+
+	/**
+	 * @internal @ignore
+	 * A method used internally to convert a {@link NavigationAction} into an [instruction set]{@link TeExecutor}
+	 * @param  NavigationAction action
+	 * @returns void
+	 */
+	private actionParser(action: NavigationAction | undefined): void {
+		const _action &#x3D; action;
+		if (this.blockNavigation || (this.currentRow &#x3D;&#x3D;&#x3D; null &amp;&amp; action &#x3D;&#x3D;&#x3D; NavigationAction.Exit)) return;
+		const executor: TeExecutor &#x3D; { row: null, cell: null };
+
+		const currentRow &#x3D; this.currentRow!;
+		const currentCells &#x3D; currentRow.cells.filter(c &#x3D;&gt; c.disabled &#x3D;&#x3D;&#x3D; CellDisabledState.Enabled);
+		const cellIdx &#x3D; currentCells.indexOf(this.currentCell!);
+		let absoluteIdx &#x3D; currentRow.cells.indexOf(this.currentCell!);
+		const currentRows &#x3D; this.rows.toArray();
+		const rowIdx &#x3D; currentRows.indexOf(currentRow);
+		let nextCellIdx;
+		let nextCell;
+		let nextRowIdx;
+		let nextRow;
+		if (action &#x3D;&#x3D;&#x3D; NavigationAction.Right || action &#x3D;&#x3D;&#x3D; NavigationAction.Left) {
+			const indexOperator &#x3D; action &#x3D;&#x3D;&#x3D; NavigationAction.Left ? &#x27;--&#x27; : &#x27;++&#x27;;
+			nextCellIdx &#x3D; cellIdx;
+			eval(&#x27;nextCellIdx&#x27; + indexOperator);
+			nextCell &#x3D; currentCells[nextCellIdx];
+			if (nextCell) {
+				executor.cell &#x3D; nextCell;
+				executor.row &#x3D; this.currentRow;
+				return this.executeFor(executor, _action);
+			} else {
+				action &#x3D; action &#x3D;&#x3D;&#x3D; NavigationAction.Left ? NavigationAction.Up : NavigationAction.Down;
+				cellIdx &gt; 0 ? (absoluteIdx &#x3D; 0) : (absoluteIdx &#x3D; currentRow.cells.length - 1);
+			}
+		}
+		if (action &#x3D;&#x3D;&#x3D; NavigationAction.Up || action &#x3D;&#x3D;&#x3D; NavigationAction.Down) {
+			const indexOperator &#x3D; action &#x3D;&#x3D;&#x3D; NavigationAction.Up ? &#x27;--&#x27; : &#x27;++&#x27;;
+			nextRowIdx &#x3D; rowIdx;
+			while (nextCell &#x3D;&#x3D;&#x3D; undefined) {
+				/* assures that it will jump over a disabled row */
+				eval(&#x27;nextRowIdx&#x27; + indexOperator);
+				nextRow &#x3D; currentRows[nextRowIdx];
+				if (nextRow) {
+					const nextRowAllCells &#x3D; nextRow.cells;
+					const nextRowEnabledCells &#x3D; nextRowAllCells.filter(c &#x3D;&gt; c.disabled &#x3D;&#x3D;&#x3D; CellDisabledState.Enabled);
+					executor.row &#x3D; nextRow;
+
+					nextCell &#x3D; nextRowAllCells[absoluteIdx];
+					if (nextCell.disabled &#x3D;&#x3D;&#x3D; CellDisabledState.Disabled) {
+						if (absoluteIdx &gt; nextRowEnabledCells.length - 1) {
+							nextCell &#x3D; nextRowEnabledCells[nextRowEnabledCells.length - 1];
+						} else {
+							nextCell &#x3D; nextRowEnabledCells[absoluteIdx];
+						}
+					}
+					executor.cell &#x3D; nextCell;
+				} else {
+					executor.row &#x3D; null;
+					executor.cell &#x3D; null;
+					break;
+				}
+			}
+		}
+		return this.executeFor(executor, _action);
+	}
+
+	/** @internal  */
+	ngOnDestroy() {
+		if (this.currentRow) {
+			this.currentRow.cellify();
+		}
+		this.subscriptions.forEach(s &#x3D;&gt; s.unsubscribe());
+		this.unlistenNavigators.forEach(un &#x3D;&gt; un());
+		this.vc.clear();
+	}
+	/** @internal  Instantiates the navigators. */
+	ngOnInit() {
+		this.navigators.forEach(nav &#x3D;&gt; this.unlistenNavigators.push(nav.listener()));
+	}
+	/** @internal  Subcribing to the rows and managing rows that are added dynamically. */
+	ngAfterContentInit() {
+		const rows &#x3D; this.rows.toArray();
+		rows.forEach(row &#x3D;&gt; {
+			this.subscriptions.push(row.teCellClick.subscribe((executor: TeExecutor) &#x3D;&gt; this.executeFor(executor)));
+			this.subscriptions.push(
+				row.teBlockNavigationEventEmitter.subscribe(() &#x3D;&gt; {
+					this.blockNavigation &#x3D; true;
+				})
+			);
+		});
+		this.differ &#x3D; this.differs.find(rows).create();
+		this.differ.diff(rows);
+		const changesSubscription &#x3D; this.rows.changes.subscribe((changes: QueryList&lt;TableEditorRowDirective&gt;) &#x3D;&gt; {
+			const newRows &#x3D; this.rows.toArray();
+			const diff &#x3D; this.differ.diff(newRows)!;
+			diff.forEachAddedItem(r &#x3D;&gt; {
+				r.item.teCellClick.subscribe((executor: TeExecutor) &#x3D;&gt; this.executeFor(executor));
+				r.item.teBlockNavigationEventEmitter.subscribe(() &#x3D;&gt; {
+					this.blockNavigation &#x3D; true;
+				});
+			});
+		});
+		// keeping the subsriptions in once place to make it easier to unregister everything upon destroy
+		this.subscriptions.push(changesSubscription);
+	}
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'TeExecutor.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

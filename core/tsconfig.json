@@ -1,0 +1,38 @@
+{
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false
+    },
+    "compilerOptions": {
+        "stripInternal": true,
+        "baseUrl": ".",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": false,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "rootDir": ".",
+        "paths": {
+            "@ngx-table-editor/core": [
+                "./src/index"
+            ]
+        },
+        "sourceMap": true,
+        "inlineSources": true,
+        "target": "es5",
+        "skipLibCheck": true,
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "typeRoots": [
+            "node_modules/@types/"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "./src/extras/typeahead/typeahead-dependencies/**",
+    ]
+}

@@ -1,0 +1,466 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-table-editor documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ngx-table-editor documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>AbstractNavigator</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#readme" role="tab" id="readme-tab" data-toggle="tab" data-link="readme">README</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>core/src/navigators/navigator.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>An abstract base class that can be used to implement a navigator, allowing for interactions between the UI and <a href="../directives/TableEditorDirective.html">TableEditorDirective</a>. See the <a href="/documentation/classes/AbstractNavigator.html#readme">README section</a> on this page on how to implement one, or check out the source code of <a href="documentation/classes/KeyboardNavigator.html#source">KeyboardNavigator</a> for more detailed information.</p>
+
+            </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#execute">execute</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#listener">listener</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(renderer: <a href="https://angular.io/api/core/Renderer2" target="_blank">Renderer2</a>, tableElementRef: ElementRef<HTMLTableElement>, actionParser: (action: <a href="../undefineds/NavigationAction.html">NavigationAction | undefined</a>) => void)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">core/src/navigators/navigator.ts:18</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/core/Renderer2" target="_blank" >Renderer2</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>tableElementRef</td>
+                                                  
+                                                        <td>
+                                                                    <code>ElementRef&lt;HTMLTableElement&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>actionParser</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+            <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="execute"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            execute
+                            </b>
+                            <a href="#execute"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>execute(action: <a href="../undefineds/NavigationAction.html">NavigationAction | undefined</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">core/src/navigators/navigator.ts:29</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>A method that should be called to instruct the Table Editor to move in a certain direction.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>action</td>
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/enumerations.html#NavigationAction" target="_self" >NavigationAction | undefined</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>void</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="listener"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Abstract</span>
+                            listener
+                            </b>
+                            <a href="#listener"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>listener()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">core/src/navigators/navigator.ts:36</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>When a TableEditorDirective is instantiated, it will call (<a href="../directives/TableEditorDirective.html#ngOnInit">in the onInit lifecycle</a>) <code>listener</code> of all navigators associated with the instance.</p>
+</div>
+
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>() =&gt; void the unregister function for the listeners that have been registered.</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+    </div>
+
+    <div class="tab-pane fade " id="c-readme">
+        <p><h3 id="guide-implementing-a-custom-navigator">Guide: implementing a custom Navigator</h3>
+<p>This guide will discuss how to implement a custom navigator that causes the table editor to exit upon a click outside of the table.</p>
+<h4 id="the-implementation">The implementation</h4>
+<div><pre class="line-numbers"><code class="language-js">import { NavigationAction, AbstractNavigator } from &#39;ngx-table-editor&#39;
+
+class MouseNavigator extends AbstractNavigator {
+    public listener(): () =&gt; void {
+        const unregisterFn = this.renderer.listen(document, &#39;click&#39;, this.actionGenerator.bind(this));
+        return unregisterFn
+    }
+    private actionGenerator(event: MouseEvent): void {
+        if (!(event as any).path.includes(this.tableElementRef.nativeElement)) {
+            this.execute(NavigationAction.Exit);
+        }
+    }
+}</code></pre></div><p>Any class that inherits from <code>AbstractNavigator</code> must implement a <code>listener</code> method, in which any interaction with the DOM is done (listening to scrolling events):</p>
+<div><pre class="line-numbers"><code class="language-js">    public listener(): () =&gt; void {
+        // attach the appropiate listener to the dom.
+        const unregisterFn = this.renderer.listen(document, &#39;click&#39;, this.actionGenerator.bind(this));
+        // make sure to return the unregisterFn. It is called internally when the table is destroyed.
+        return unregisterFn;
+    }</code></pre></div><p>Internally, the navigator will be injected in the <code>TableEditorDirective</code> constructor, and the listener method will be called by the instance of <code>TableEditorDirective</code> as soon as angular fires the <code>OnInit</code> lifecycle hook. It must return a unregister function which will be fired when the <code>TableEditorDirective</code> is destroyed.</p>
+<div><pre class="line-numbers"><code class="language-js">    private actionGenerator(event: MouseEvent): void {
+        // Through the inheritance of `AbstractNavigator`, instances of the MouseNavigator class have access to the `ElementRef&lt;HTMLTableElement&gt;` of the table, through `this.tableElementRef`.
+        if (!(event as any).path.includes(this.tableElementRef.nativeElement)) {
+            this.execute(NavigationAction.Exit);
+        }
+    }</code></pre></div><p>Lastly, the navigator must be added to the <code>TE_NAVIGATORS</code> multi provider, which is done by registering it in the <code>providers</code> section in your module as follows:</p>
+<div><pre class="line-numbers"><code class="language-js">import { NgModule } from &#39;&#64;angular/core&#39;;
+import { TE_NAVIGATORS } from &#39;ngx-table-editor&#39;
+import { MouseNavigator } from &#39;./mouse-navigator&#39;
+
+&#64;NgModule({
+    providers: [
+        { provide: TE_NAVIGATORS, useValue: MouseNavigator, multi: true },
+    ]
+})
+export class MyModule {}</code></pre></div><h4 id="notes">Notes</h4>
+<ul>
+<li>Injection in the navigators is currently not possible because the navigators are instantiated by <code>TableEditorDirective</code>, not through Angular DI. This should probably be changed in a later version.</li>
+</ul>
+</p>
+    </div>
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ElementRef, Renderer2, InjectionToken } from &#x27;@angular/core&#x27;;
+
+export const TE_NAVIGATORS &#x3D; new InjectionToken&lt;AbstractNavigator&gt;(&#x27;TeNavigators&#x27;);
+
+/**
+ * An enumerator that reflect the possible movements that happen within a table.
+ */
+export enum NavigationAction {
+	Up &#x3D; &#x27;up&#x27;,
+	Right &#x3D; &#x27;right&#x27;,
+	Down &#x3D; &#x27;down&#x27;,
+	Left &#x3D; &#x27;left&#x27;,
+	Exit &#x3D; &#x27;exit&#x27;
+}
+/**
+ * An abstract base class that can be used to implement a navigator, allowing for interactions between the UI and [TableEditorDirective]{@link TableEditorDirective}. See the [README section]{@link /documentation/classes/AbstractNavigator.html#readme} on this page on how to implement one, or check out the source code of [KeyboardNavigator]{@link documentation/classes/KeyboardNavigator.html#source} for more detailed information.
+ */
+export abstract class AbstractNavigator {
+	constructor(
+		protected renderer: Renderer2,
+		protected tableElementRef: ElementRef&lt;HTMLTableElement&gt;,
+		private actionParser: (action: NavigationAction | undefined) &#x3D;&gt; void
+	) {}
+
+	/**
+	 * A method that should be called to instruct the Table Editor to move in a certain direction.
+	 * @returns void
+	 */
+	protected execute(action: NavigationAction | undefined): void {
+		this.actionParser(action);
+	}
+	/**
+	 * When a TableEditorDirective is instantiated, it will call ([in the onInit lifecycle]{@link TableEditorDirective#ngOnInit}) &#x60;listener&#x60; of all navigators associated with the instance.
+	 * @returns () &#x3D;&gt; void the unregister function for the listeners that have been registered.
+	 */
+	abstract listener(): () &#x3D;&gt; void;
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'AbstractNavigator.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

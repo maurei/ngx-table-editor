@@ -1,0 +1,35 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand"><h3>ngx-table-editor</h3></a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]='{active: isActive("demo")}' uiSref="demo">Getting Started</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link no-hover">|</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/ngx-table-editor/documentation/'>API Documentation</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link no-hover">|</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link no-hover">Examples: </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]='{active: isActive("basic")}' uiSref="basic">Basic</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]='{active: isActive("supported-fields")}' uiSref="supported-fields">Supported Fields</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]='{active: isActive("advanced")}' uiSref="advanced">Advanced</a>
+      </li>
+    </ul>
+  </div>
+</nav>

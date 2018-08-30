@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">Supported Fields</h4>
+    <h6 class="card-subtitle mb-2 text-muted">text, number and date fields</h6>
+    <p class="card-text">Setting <code>type='text'</code>, <code>type='number'</code> and <code>type='date'</code> leverages native HTML5 input types. For the last, there is an additional attribute <code>date-format</code> that allows for configuration of the date representation in a template-driven way.</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item" (click)='switchView("table")'>
+        <a class="nav-link" [ngClass]='{active: view === "table"}'>Example</a>
+      </li>
+      <li class="nav-item" (click)='switchView("html")'>
+        <a class="nav-link" [ngClass]='{active: view === "html"}'>HTML</a>
+      </li>
+      <li class="nav-item" (click)='switchView("ts")'>
+        <a class="nav-link" [ngClass]='{active: view === "ts"}'>TS</a>
+      </li>
+      <li class="nav-item" (click)='switchView("css")'>
+        <a class="nav-link" [ngClass]='{active: view === "css"}'>CSS</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-block" *ngIf="view === 'table'">
+    <table tableEditor class='table'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Family</th>
+          <th>Age</th>
+          <th>Company</th>
+          <th>Birthday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr teRow *ngFor='let row of rows;'>
+          <td teCell [(ngModel)]=row.givenName>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell [(ngModel)]=row.familyName>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell type='number' [(ngModel)]=row.age>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell [(ngModel)]=row.company>
+            <ng-container teAnchor></ng-container>
+          </td>
+          <td teCell type='date' date-format="fullDate" [(ngModel)]=row.birthday>
+            <ng-container teAnchor></ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Changes in the first row are highlighted here:
+      <markdown [data]="viewJson | language : 'json'"></markdown>
+    </p>
+
+  </div>
+  <div class="card-block" *ngIf="view === 'html'">
+    <markdown [data]="viewHtml| language : 'markup'"></markdown>
+    <p>Note! Do not forget to put the <code>NgContainer</code> element with the <code>teAnchor</code> directive inside the
+      table cell: <markdown [data]="htmlNote | language : 'markup'"></markdown>
+    </p>
+  </div>
+  <div class="card-block" *ngIf="view === 'ts'">
+    <markdown [data]="viewTs | language : 'typescript'"></markdown>
+  </div>
+  <div class="card-block" *ngIf="view === 'css'">
+    <p>The input elements are positioned by some javascript code, <a href="/ngx-table-editor/documentation">see the API docs</a>. This requires the
+      tableto be positioned relative, and the inputs to be positioned absolute.
+      <markdown [data]="viewCss | language : 'scss'"></markdown>
+    </p>
+  </div>
+</div>

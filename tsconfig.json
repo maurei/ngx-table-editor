@@ -1,0 +1,17 @@
+{
+    "include": [
+        "core/src/**/*",
+        "extras/src/**/*"
+    ],
+    "exclude": [
+        "core/node_modules",
+        "node_modules",
+        "**/*.spec.ts",
+        "extras/typeahead/typeahead-dependencies/**"
+    ],
+    "compilerOptions": {
+        "ngx-table-editor-dev": [
+            "../core/src/index"
+        ],
+    },
+}

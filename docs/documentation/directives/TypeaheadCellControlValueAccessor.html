@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-table-editor documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ngx-table-editor documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li>TypeaheadCellControlValueAccessor</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>extras/src/typeahead/typeahead.directive.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>This is a fork of <a href="https://valor-software.com/ngx-bootstrap/#/typeahead">ngx-bootstrap typeahead</a>. It has been adjusted to also accept in the <code>NgModel</code> binding references to objects instead of plain values, and typeaheadEditable is set to false (<a href="https://github.com/valor-software/ngx-bootstrap/issues/1894">see this issue</a>). Other than that, check out the ngx-bootstrap documentation for usage details, or check out <a href="../../demo/#/examples/supported-fields">the examples</a> on how to use it.</p>
+
+            </p>
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                        <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                        <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+                    <tr>
+                        <td class="col-md-3">Providers</td>
+                        <td class="col-md-9">
+                            <code>
+                                {
+    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() &#x3D;&gt; TypeaheadCellControlValueAccessor), multi: true
+}
+                            </code>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>td[type&#x3D;typeahead][ngModel]</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+	ChangeDetectorRef,
+	Directive,
+	ElementRef,
+	EventEmitter,
+	HostListener,
+	Input,
+	OnDestroy,
+	OnInit,
+	Output,
+	Renderer2,
+	TemplateRef,
+	ViewContainerRef,
+	forwardRef,
+	Injector
+} from &#x27;@angular/core&#x27;;
+import { NgControl, NG_VALUE_ACCESSOR } from &#x27;@angular/forms&#x27;;
+
+import { from, Observable, Subscription } from &#x27;rxjs&#x27;;
+import { ComponentLoader, } from &#x27;./typeahead-dependencies/component-loader/component-loader.class&#x27;;
+import { ComponentLoaderFactory } from &#x27;./typeahead-dependencies/component-loader/component-loader.factory&#x27;;
+import { TypeaheadContainerComponent } from &#x27;./typeahead-dependencies/typeahead-container.component&#x27;;
+import { TypeaheadMatch } from &#x27;./typeahead-dependencies/typeahead-match.class&#x27;;
+import { getValueFromObject, latinize, tokenize } from &#x27;./typeahead-dependencies/typeahead-utils&#x27;;
+import { debounceTime, filter, mergeMap, switchMap, toArray } from &#x27;rxjs/operators&#x27;;
+import { AbstractTableCell, TableEditorConfig, TemplateService } from &#x27;@ngx-table-editor/core&#x27;;
+// import { AbstractTableCell, TableEditorConfig, TemplateService } from &#x27;../../../core/src/table-editor.module&#x27;;
+
+/**
+ * This is a fork of [ngx-bootstrap typeahead]{@link https://valor-software.com/ngx-bootstrap/#/typeahead}. It has been adjusted to also accept in the &#x60;NgModel&#x60; binding references to objects instead of plain values, and typeaheadEditable is set to false ([see this issue]{@link https://github.com/valor-software/ngx-bootstrap/issues/1894}). Other than that, check out the ngx-bootstrap documentation for usage details, or check out [the examples]{@link ../../demo/#/examples/supported-fields} on how to use it.
+ */
+@Directive({
+	selector: &#x27;td[type&#x3D;typeahead][ngModel]&#x27;,
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() &#x3D;&gt; TypeaheadCellControlValueAccessor),
+			multi: true
+		}
+	],
+	exportAs: &#x27;bs-typeahead&#x27;,
+	host: {
+		&#x27;(input)&#x27;: &#x27;$any(this)._handleInput($event.target.value)&#x27;,
+		&#x27;(blur)&#x27;: &#x27;onTouched()&#x27;,
+		&#x27;(compositionstart)&#x27;: &#x27;$any(this)._compositionStart()&#x27;,
+		&#x27;(compositionend)&#x27;: &#x27;$any(this)._compositionEnd($event.target.value)&#x27;
+	}
+})
+export class TypeaheadCellControlValueAccessor extends AbstractTableCell implements OnInit, OnDestroy {
+	/** @ignore */
+	@Input()
+	typeahead: any;
+	/** @ignore */
+	@Input()
+	typeaheadMinLength: number &#x3D; void 0;
+	/** @ignore */
+	@Input()
+	typeaheadWaitMs: number;
+	/** @ignore */
+	@Input()
+	typeaheadOptionsLimit: number;
+	/** @ignore */
+	@Input()
+	typeaheadOptionField: string;
+	/** @ignore */
+	@Input()
+	typeaheadGroupField: string;
+	/** @ignore */
+	@Input()
+	typeaheadAsync: boolean &#x3D; void 0;
+	/** @ignore */
+	@Input()
+	typeaheadLatinize &#x3D; true;
+
+	/** @ignore */
+	@Input()
+	typeaheadSingleWords &#x3D; true;
+	/** @ignore */
+	@Input()
+	typeaheadWordDelimiters &#x3D; &#x27; &#x27;;
+	/** @ignore */
+	@Input()
+	typeaheadPhraseDelimiters &#x3D; &#x27;\&#x27;&quot;&#x27;;
+	/** @ignore */
+	@Input()
+	typeaheadItemTemplate: TemplateRef&lt;any&gt;;
+	/** @ignore */
+	@Input()
+	optionsListTemplate: TemplateRef&lt;any&gt;;
+	/** @ignore */
+	@Input()
+	typeaheadScrollable &#x3D; false;
+	/** @ignore */
+	@Input()
+	typeaheadOptionsInScrollableView &#x3D; 5;
+	/** @ignore */
+	@Output()
+	typeaheadLoading &#x3D; new EventEmitter&lt;boolean&gt;();
+	/** @ignore */
+	@Output()
+	typeaheadNoResults &#x3D; new EventEmitter&lt;boolean&gt;();
+	/** @ignore */
+	@Output()
+	typeaheadOnSelect &#x3D; new EventEmitter&lt;TypeaheadMatch&gt;();
+	/** @ignore */
+	@Output()
+	typeaheadOnBlur &#x3D; new EventEmitter&lt;any&gt;();
+	/** @ignore */
+	@Input()
+	container: string;
+	/** @ignore */
+	@Input()
+	dropup &#x3D; false;
+
+	/** @ignore */
+	_container: TypeaheadContainerComponent;
+	/** @ignore */
+	isTypeaheadOptionsListActive &#x3D; false;
+
+	/** @ignore */
+	protected keyUpEventEmitter: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
+	/** @ignore */
+	protected _matches: TypeaheadMatch[];
+	/** @ignore */
+	protected placement &#x3D; &#x27;bottom-left&#x27;;
+	// protected popup:ComponentRef&lt;TypeaheadContainerComponent&gt;;
+	/** @ignore */
+	private _typeahead: ComponentLoader&lt;TypeaheadContainerComponent&gt;;
+	/** @ignore */
+	private _subscriptions: Subscription[] &#x3D; [];
+	/** @ignore */
+	private _outsideClickListener: Function;
+	/** @ignore */
+	constructor(
+		templateBridge: TemplateService,
+		config: TableEditorConfig,
+		private element: ElementRef&lt;HTMLTableCellElement&gt;,
+		renderer: Renderer2,
+		viewContainerRef: ViewContainerRef,
+		injector: Injector,
+		private cis: ComponentLoaderFactory,
+		private changeDetection: ChangeDetectorRef
+	) {
+		super(templateBridge, config, element, renderer, viewContainerRef, injector);
+	}
+	/** @ignore */
+	ngOnInit(): void {
+		super.ngOnInit();
+		this.ngControl &#x3D; &lt;NgControl&gt;this.injector.get(NgControl);
+		this.typeaheadOptionsLimit &#x3D; this.typeaheadOptionsLimit || 20;
+		this.typeaheadMinLength &#x3D; this.typeaheadMinLength &#x3D;&#x3D;&#x3D; void 0 ? 1 : this.typeaheadMinLength;
+		this.typeaheadWaitMs &#x3D; this.typeaheadWaitMs || 0;
+
+		// async should be false in case of array
+		if (this.typeaheadAsync &#x3D;&#x3D;&#x3D; undefined &amp;&amp; !(this.typeahead instanceof Observable)) {
+			this.typeaheadAsync &#x3D; false;
+		}
+
+		if (this.typeahead instanceof Observable) {
+			this.typeaheadAsync &#x3D; true;
+		}
+
+		if (this.typeaheadAsync) {
+			this.asyncActions();
+		} else {
+			this.syncActions();
+		}
+		this.onBlurEventEmitter.subscribe((e: FocusEvent) &#x3D;&gt; {
+			const value &#x3D; this.inputValueFormatter(this.ngControl.control.value);
+
+			this.setInputValue(value);
+			if (this._container &amp;&amp; !this._container.isFocused) {
+				this.typeaheadOnBlur.emit(this._container.active);
+			}
+		});
+
+		// this.onKeyUpEventEmitter.subscribe( (e) &#x3D;&gt; {
+		// 	this._onChange(e);
+		// });
+	}
+	/** @ignore */
+	@HostListener(&#x27;input&#x27;, [&#x27;$event&#x27;])
+	onInput(e: any): void {
+		// For &#x60;&lt;input&gt;&#x60;s, use the &#x60;value&#x60; property. For others that don&#x27;t have a
+		// &#x60;value&#x60; (such as &#x60;&lt;span contenteditable&#x3D;&quot;true&quot;&gt;&#x60;), use either
+		// &#x60;textContent&#x60; or &#x60;innerText&#x60; (depending on which one is supported, i.e.
+		// Firefox or IE).;
+		// if (this.hasMatches()) {
+		if (!this.typeaheadGroupField) {
+			// super.onChange(e.target.value);
+		}
+		const value &#x3D;
+			e.target.value !&#x3D;&#x3D; undefined ? e.target.value : e.target.textContent !&#x3D;&#x3D; undefined ? e.target.textContent : e.target.innerText;
+		if (value !&#x3D; null &amp;&amp; value.trim().length &gt;&#x3D; this.typeaheadMinLength) {
+			this.typeaheadLoading.emit(true);
+			this.keyUpEventEmitter.emit(e.target.value);
+		} else {
+			this.typeaheadLoading.emit(false);
+			this.typeaheadNoResults.emit(false);
+			this.hide();
+		}
+	}
+	/** @ignore */
+	@HostListener(&#x27;keyup&#x27;, [&#x27;$event&#x27;])
+	_onChange(e: any): void {
+		if (this._container) {
+			if (e.keyCode &#x3D;&#x3D;&#x3D; 27) {
+				this.teBlockNavigationEventEmitter.emit();
+				const value &#x3D; this.inputValueFormatter(this.ngControl.control.value);
+				this.setInputValue(value);
+				this.hide();
+				return;
+			}
+
+			// up
+			if (e.keyCode &#x3D;&#x3D;&#x3D; 38) {
+				this.teBlockNavigationEventEmitter.emit();
+				this._container.prevActiveMatch();
+
+				return;
+			}
+
+			// down
+			if (e.keyCode &#x3D;&#x3D;&#x3D; 40) {
+				this.teBlockNavigationEventEmitter.emit();
+				this._container.nextActiveMatch();
+
+				return;
+			}
+
+			// enter, tab
+			if (e.keyCode &#x3D;&#x3D;&#x3D; 13) {
+				this.teBlockNavigationEventEmitter.emit();
+				const active &#x3D; this._container.active;
+				this.changeModel(active);
+				// this._container.selectMatch(active);
+
+				return;
+			}
+		}
+	}
+
+	// @HostListener(&#x27;click&#x27;)
+	// @HostListener(&#x27;focus&#x27;)
+	// onFocus(): void {
+	// 	if (this.typeaheadMinLength &#x3D;&#x3D;&#x3D; 0) {
+	// 		this.typeaheadLoading.emit(true);
+	// 		// NEED TO FIX
+	// 		// this.keyUpEventEmitter.emit(this.element.nativeElement.value || &#x27;&#x27;);
+	// 	}
+	// }
+
+	// @HostListener(&#x27;blur&#x27;)
+	// onBlur(): void {
+	// 	this.writeValue(this.ngControl.control.value);
+	// 	if (this._container &amp;&amp; !this._container.isFocused) {
+	// 		this.typeaheadOnBlur.emit(this._container.active);
+	// 	}
+	// }
+	/** @ignore */
+	@HostListener(&#x27;keydown&#x27;, [&#x27;$event&#x27;])
+	onKeydown(e: any): void {
+		// no container - no problems
+		if (!this._container) {
+			return;
+		}
+
+		// if an item is visible - prevent form submission (enter)
+		if (e.keyCode &#x3D;&#x3D;&#x3D; 13) {
+			e.preventDefault();
+			return;
+		}
+		// if an item is visible - don&#x27;t change focus (tab)
+		if (e.keyCode &#x3D;&#x3D;&#x3D; 9) {
+			this.teBlockNavigationEventEmitter.emit();
+			e.preventDefault();
+			const active &#x3D; this._container.active;
+			this.changeModel(active);
+			return;
+		}
+	}
+	/** @ignore */
+	changeModel(match: TypeaheadMatch): void {
+		// const valueStr: string &#x3D; match.value;
+		// this.renderer.setProperty(this[&#x27;inputElement&#x27;].nativeElement, &#x27;value&#x27;, match.value);
+		this.setInputValue(match.value);
+		this.ngControl.viewToModelUpdate(match.item);
+		this.ngControl.control.setValue(match.item);
+		this.changeDetection.markForCheck();
+		this.hide();
+	}
+	/** @ignore */
+	get matches(): any[] {
+		return this._matches;
+	}
+	/** @ignore */
+	@HostListener(&#x27;click&#x27;, [&#x27;$event&#x27;])
+	onClick(event: MouseEvent) {
+		super.onClick(event);
+	}
+	/** @ignore */
+	public writeValue(modelVal: Date): void {
+		super.setCellValue(modelVal);
+	}
+	/** @ignore */
+	public registerOnChange(fn: any): void {}
+	/** @ignore */
+	public registerOnTouched(fn: any): void {}
+	/** @ignore */
+	public parser(value: any) {
+		return this.ngControl.control.value;
+		return value;
+		// return new Date(value);
+	}
+	/** @ignore */
+	teAfterInputify() {
+		this._typeahead &#x3D; this.cis.createLoader&lt;TypeaheadContainerComponent&gt;(this.element, this[&#x27;innerViewContainer&#x27;], this.renderer);
+	}
+	/** @ignore */
+	public cellValueFormatter(value: any) {
+		value &#x3D; value &#x3D;&#x3D;&#x3D; null ? &#x27;&#x27; : this.getOptionFromObject(value);
+		return value;
+	}
+	/** @ignore */
+	public inputValueFormatter(value: any) {
+		value &#x3D; value &#x3D;&#x3D;&#x3D; null ? &#x27;&#x27; : this.getOptionFromObject(value);
+		return value;
+	}
+	/** @ignore */
+	show(): void {
+		this._typeahead
+			.attach(TypeaheadContainerComponent)
+			// todo: add append to body, after updating positioning service
+			.to(this.element)
+			.position({ attachment: &#x60;${this.dropup ? &#x27;top&#x27; : &#x27;bottom&#x27;} left&#x60; })
+			.show({
+				typeaheadRef: this,
+				placement: this.placement,
+				animation: false,
+				dropup: this.dropup
+			});
+
+		this._outsideClickListener &#x3D; this.renderer.listen(&#x27;document&#x27;, &#x27;click&#x27;, (e: MouseEvent) &#x3D;&gt; {
+			if (this.typeaheadMinLength &#x3D;&#x3D;&#x3D; 0 &amp;&amp; (this.element.nativeElement as any).contains(e.target)) {
+				return;
+			}
+			this.onOutsideClick();
+		});
+
+		this._container &#x3D; this._typeahead.instance;
+		this._container.parent &#x3D; this;
+		// This improves the speed as it won&#x27;t have to be done for each list item
+		const normalizedValue &#x3D; this.getOptionFromObject(this.ngControl.control.value);
+		const normalizedQuery &#x3D; (this.typeaheadLatinize ? latinize(normalizedValue) : normalizedValue).toString().toLowerCase();
+		this._container.query &#x3D; this.typeaheadSingleWords
+			? tokenize(normalizedQuery, this.typeaheadWordDelimiters, this.typeaheadPhraseDelimiters)
+			: normalizedQuery;
+		this._container.matches &#x3D; this._matches;
+		this.element.nativeElement.focus();
+	}
+	/** @ignore */
+	hide(): void {
+		if (this._typeahead.isShown) {
+			this._typeahead.hide();
+			this._outsideClickListener();
+			this._container &#x3D; null;
+		}
+	}
+	/** @ignore */
+	onOutsideClick(): void {
+		if (this._container &amp;&amp; !this._container.isFocused) {
+			this.hide();
+		}
+	}
+	/** @ignore */
+	ngOnDestroy(): any {
+		for (const sub of this._subscriptions) {
+			sub.unsubscribe();
+		}
+		if (this._typeahead) this._typeahead.dispose();
+	}
+	/** @ignore */
+	protected asyncActions(): void {
+		this._subscriptions.push(
+			this.keyUpEventEmitter
+				.pipe(
+					debounceTime(this.typeaheadWaitMs),
+					switchMap(() &#x3D;&gt; this.typeahead)
+				)
+				.subscribe((matches: any) &#x3D;&gt; {
+					this.finalizeAsyncCall(matches);
+				})
+		);
+	}
+	/** @ignore */
+	protected syncActions(): void {
+		this._subscriptions.push(
+			this.keyUpEventEmitter
+				.pipe(
+					debounceTime(this.typeaheadWaitMs),
+					mergeMap((value: string) &#x3D;&gt; {
+						const normalizedQuery &#x3D; this.normalizeQuery(value);
+						return from(this.typeahead).pipe(
+							filter((option: any) &#x3D;&gt; {
+								return option &amp;&amp; this.testMatch(this.normalizeOption(option), normalizedQuery);
+							}),
+							toArray()
+						);
+					})
+				)
+				.subscribe((matches: any[]) &#x3D;&gt; {
+					this.finalizeAsyncCall(matches);
+				})
+		);
+	}
+	/** @ignore */
+	protected normalizeOption(option: any): any {
+		const optionValue: string &#x3D; getValueFromObject(option, this.typeaheadOptionField);
+		const normalizedOption &#x3D; this.typeaheadLatinize ? latinize(optionValue) : optionValue;
+
+		return normalizedOption.toLowerCase();
+	}
+	/** @ignore */
+	protected normalizeQuery(value: string): any {
+		// If singleWords, break model here to not be doing extra work on each
+		// iteration
+		let normalizedQuery: any &#x3D; (this.typeaheadLatinize ? latinize(value) : value).toString().toLowerCase();
+		normalizedQuery &#x3D; this.typeaheadSingleWords
+			? tokenize(normalizedQuery, this.typeaheadWordDelimiters, this.typeaheadPhraseDelimiters)
+			: normalizedQuery;
+
+		return normalizedQuery;
+	}
+	/** @ignore */
+	protected testMatch(match: string, test: any): boolean {
+		let spaceLength: number;
+
+		if (typeof test &#x3D;&#x3D;&#x3D; &#x27;object&#x27;) {
+			spaceLength &#x3D; test.length;
+			for (let i &#x3D; 0; i &lt; spaceLength; i +&#x3D; 1) {
+				if (test[i].length &gt; 0 &amp;&amp; match.indexOf(test[i]) &lt; 0) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return match.indexOf(test) &gt;&#x3D; 0;
+	}
+	/** @ignore */
+	protected finalizeAsyncCall(matches: any[]): void {
+		this.prepareMatches(matches);
+		this.typeaheadLoading.emit(false);
+		this.typeaheadNoResults.emit(!this.hasMatches());
+
+		if (!this.hasMatches()) {
+			this.hide();
+
+			return;
+		}
+
+		if (this._container) {
+			// fix: remove usage of ngControl internals
+			const normalizedValue &#x3D; this.getOptionFromObject(this.ngControl.control.value);
+			const _controlValue &#x3D; (this.typeaheadLatinize ? latinize(normalizedValue) : normalizedValue) || &#x27;&#x27;;
+			// This improves the speed as it won&#x27;t have to be done for each list item
+			const normalizedQuery &#x3D; _controlValue.toString().toLowerCase();
+			this._container.query &#x3D; this.typeaheadSingleWords
+				? tokenize(normalizedQuery, this.typeaheadWordDelimiters, this.typeaheadPhraseDelimiters)
+				: normalizedQuery;
+			this._container.matches &#x3D; this._matches;
+		} else {
+			this.show();
+		}
+	}
+	/** @ignore */
+	protected prepareMatches(options: any[]): void {
+		const limited: any[] &#x3D; options.slice(0, this.typeaheadOptionsLimit);
+
+		if (this.typeaheadGroupField) {
+			let matches: TypeaheadMatch[] &#x3D; [];
+
+			// extract all group names
+			const groups &#x3D; limited
+				.map((option: any) &#x3D;&gt; getValueFromObject(option, this.typeaheadGroupField))
+				.filter((v: string, i: number, a: any[]) &#x3D;&gt; a.indexOf(v) &#x3D;&#x3D;&#x3D; i);
+
+			groups.forEach((group: string) &#x3D;&gt; {
+				// add group header to array of matches
+				matches.push(new TypeaheadMatch(group, group, true));
+
+				// add each item of group to array of matches
+				matches &#x3D; matches.concat(
+					limited
+						.filter((option: any) &#x3D;&gt; getValueFromObject(option, this.typeaheadGroupField) &#x3D;&#x3D;&#x3D; group)
+						.map((option: any) &#x3D;&gt; new TypeaheadMatch(option, getValueFromObject(option, this.typeaheadOptionField)))
+				);
+			});
+
+			this._matches &#x3D; matches;
+		} else {
+			this._matches &#x3D; limited.map((option: any) &#x3D;&gt; new TypeaheadMatch(option, getValueFromObject(option, this.typeaheadOptionField)));
+		}
+	}
+	/** @ignore */
+	protected hasMatches(): boolean {
+		return this._matches.length &gt; 0;
+	}
+	/** @ignore */
+	private getOptionFromObject(ngControlValue: any) {
+		if (!!ngControlValue &amp;&amp; typeof ngControlValue &#x3D;&#x3D;&#x3D; &#x27;object&#x27;) {
+			return ngControlValue[this.typeaheadOptionField];
+		}
+		return ngControlValue;
+	}
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'TypeaheadCellControlValueAccessor.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
