@@ -19,7 +19,7 @@ import {
 import { NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { from, Observable, Subscription } from 'rxjs';
-import { ComponentLoader, } from './typeahead-dependencies/component-loader/component-loader.class';
+import { ComponentLoader } from './typeahead-dependencies/component-loader/component-loader.class';
 import { ComponentLoaderFactory } from './typeahead-dependencies/component-loader/component-loader.factory';
 import { TypeaheadContainerComponent } from './typeahead-dependencies/typeahead-container.component';
 import { TypeaheadMatch } from './typeahead-dependencies/typeahead-match.class';
@@ -180,6 +180,7 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 		// 	this._onChange(e);
 		// });
 	}
+
 	/** @ignore */
 	@HostListener('input', ['$event'])
 	onInput(e: any): void {
@@ -289,6 +290,7 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 		this.ngControl.viewToModelUpdate(match.item);
 		this.ngControl.control.setValue(match.item);
 		this.changeDetection.markForCheck();
+		this.onChange(match.item);
 		this.hide();
 	}
 	/** @ignore */
@@ -305,13 +307,17 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 		super.setCellValue(modelVal);
 	}
 	/** @ignore */
-	public registerOnChange(fn: any): void {}
+	public onChange = (_: any) => {
+		/* HOW THE F does this work under the hood??? */
+	}
+	public registerOnChange(fn: (_: any) => void): void {
+		this.onChange = fn;
+	}
 	/** @ignore */
 	public registerOnTouched(fn: any): void {}
 	/** @ignore */
 	public parser(value: any) {
 		return this.ngControl.control.value;
-		return value;
 		// return new Date(value);
 	}
 	/** @ignore */

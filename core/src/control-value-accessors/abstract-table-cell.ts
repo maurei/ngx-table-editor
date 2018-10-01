@@ -246,4 +246,6 @@ export abstract class AbstractTableCell implements OnInit, ControlValueAccessor,
 	public ngOnInit() {
 		this.ngControl = <NgControl>this.injector.get(NgControl);
 	}
+
+
 }
