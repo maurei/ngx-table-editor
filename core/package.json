@@ -1,6 +1,6 @@
 {
   "name": "@ngx-table-editor/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library for Angular that transforms HTML tables into dynamic editable components.",
   "main": "./bundles/ngx-table-editor-core.umd.js",
   "module": "./fesm5/ngx-table-editor-core.js",

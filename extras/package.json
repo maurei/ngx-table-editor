@@ -1,7 +1,7 @@
 {
   "name": "@ngx-table-editor/extras",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module with extras for @ngx-table-editor",
   "main": "./bundles/ngx-table-editor-extras.umd.js",
   "module": "./fesm5/ngx-table-editor-extras.js",
