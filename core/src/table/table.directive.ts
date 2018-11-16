@@ -15,7 +15,8 @@ import {
 	OnDestroy,
 	ViewContainerRef,
 	Inject,
-	Type
+	Type,
+	IterableChangeRecord
 } from '@angular/core';
 import { TableEditorRowDirective } from './row.directive';
 import { AbstractTableCell, CellDisabledState } from '../control-value-accessors/abstract-table-cell';
@@ -142,10 +143,7 @@ export class TableEditorDirective implements AfterContentInit, OnInit, OnDestroy
 		let absoluteIdx = currentRow.cells.indexOf(this.currentCell!);
 		const currentRows = this.rows.toArray();
 		const rowIdx = currentRows.indexOf(currentRow);
-		let nextCellIdx;
-		let nextCell;
-		let nextRowIdx;
-		let nextRow;
+		let nextCellIdx, nextCell, nextRowIdx, nextRow;
 		if (action === NavigationAction.Right || action === NavigationAction.Left) {
 			const indexOperator = action === NavigationAction.Left ? '--' : '++';
 			nextCellIdx = cellIdx;
@@ -169,6 +167,10 @@ export class TableEditorDirective implements AfterContentInit, OnInit, OnDestroy
 				nextRow = currentRows[nextRowIdx];
 				if (nextRow) {
 					const nextRowAllCells = nextRow.cells;
+					// if there is a teRow with no te cells at all, move to the next row
+					if (!nextRowAllCells.length) {
+						continue;
+					}
 					const nextRowEnabledCells = nextRowAllCells.filter(c => c.disabled === CellDisabledState.Enabled);
 					executor.row = nextRow;
 
@@ -207,27 +209,24 @@ export class TableEditorDirective implements AfterContentInit, OnInit, OnDestroy
 	/** @internal  Subcribing to the rows and managing rows that are added dynamically. */
 	ngAfterContentInit() {
 		const rows = this.rows.toArray();
-		rows.forEach(row => {
-			this.subscriptions.push(row.teCellClick.subscribe((executor: TeExecutor) => this.executeFor(executor)));
-			this.subscriptions.push(
-				row.teBlockNavigationEventEmitter.subscribe(() => {
-					this.blockNavigation = true;
-				})
-			);
-		});
+		rows.forEach(row => this.subscribeToRow(row));
 		this.differ = this.differs.find(rows).create();
 		this.differ.diff(rows);
 		const changesSubscription = this.rows.changes.subscribe((changes: QueryList<TableEditorRowDirective>) => {
 			const newRows = this.rows.toArray();
 			const diff = this.differ.diff(newRows)!;
-			diff.forEachAddedItem(r => {
-				r.item.teCellClick.subscribe((executor: TeExecutor) => this.executeFor(executor));
-				r.item.teBlockNavigationEventEmitter.subscribe(() => {
-					this.blockNavigation = true;
-				});
-			});
+			diff.forEachAddedItem((row: IterableChangeRecord<TableEditorRowDirective>) => this.subscribeToRow(row.item));
 		});
 		// keeping the subsriptions in once place to make it easier to unregister everything upon destroy
 		this.subscriptions.push(changesSubscription);
+	}
+
+	private subscribeToRow(target: TableEditorRowDirective) {
+		this.subscriptions.push(target.teCellClick.subscribe((executor: TeExecutor) => this.executeFor(executor)));
+		this.subscriptions.push(
+			target.teBlockNavigationEventEmitter.subscribe(() => {
+				this.blockNavigation = true;
+			})
+		);
 	}
 }

@@ -1,5 +1,17 @@
-import { Directive, ContentChildren, QueryList, AfterContentInit, EventEmitter, Input, ViewContainerRef, OnDestroy } from '@angular/core';
-import { AbstractTableCell } from '../control-value-accessors/abstract-table-cell';
+import {
+	Directive,
+	ContentChildren,
+	QueryList,
+	AfterContentInit,
+	EventEmitter,
+	Input,
+	ViewContainerRef,
+	OnDestroy,
+	IterableDiffer,
+	IterableDiffers,
+	IterableChangeRecord
+} from '@angular/core';
+import { AbstractTableCell, CellDisabledState } from '../control-value-accessors/abstract-table-cell';
 import { TeExecutor } from './table.directive';
 import { NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -24,6 +36,7 @@ export class TableEditorRowDirective implements AfterContentInit, OnDestroy {
 	/** Use this input attribute to pass along any context variable in a {@link RowChangeEvent} */
 	@Input('teContext')
 	public context: any;
+
 	/** @internal An `EventEmitter` used internally to progagate a `TeCellClick` event to {@link TableEditorDirective} */
 	public teCellClick: EventEmitter<TeExecutor> = new EventEmitter();
 	/** All CellControlValueAccessors within a row. */
@@ -36,25 +49,44 @@ export class TableEditorRowDirective implements AfterContentInit, OnDestroy {
 	/** @internal */
 	private subscriptions: Array<Subscription> = [];
 	/** @internal */
-	constructor(private vc: ViewContainerRef) {}
+	private differ: IterableDiffer<AbstractTableCell>;
+
+	/** @internal */
+	constructor(private vc: ViewContainerRef, private differs: IterableDiffers) {}
 	/** @internal */
 	public ngAfterContentInit(): void {
-		this.cells = this._cells.toArray().map((c: NgControl) => c.valueAccessor as AbstractTableCell);
-		this.cells.forEach(cell => {
-			const clickSubscriber = cell.teCellClick.subscribe((triggeredCell: AbstractTableCell) => {
-				const executor: TeExecutor = {row: null, cell: null};
-				executor.row = this;
-				executor.cell = triggeredCell;
-				this.teCellClick.emit(executor);
-			});
-			const blockSubscriber = cell.teBlockNavigationEventEmitter.subscribe(() => {
-				this.teBlockNavigationEventEmitter.emit();
-			});
-			this.subscriptions.push(clickSubscriber);
-			this.subscriptions.push(blockSubscriber);
+		const cells = this._cells.toArray().map((c: NgControl) => c.valueAccessor as AbstractTableCell);
+		cells.forEach(cell => this.subscribeToCell(cell));
+		this.cells = cells;
+
+		this.differ = this.differs.find(cells).create();
+		this.differ.diff(cells);
+
+		const changesSubscription = this._cells.changes.subscribe((changes: QueryList<NgControl>) => {
+			const newCells = this._cells.toArray().map((c: NgControl) => c.valueAccessor as AbstractTableCell);
+			const diff = this.differ.diff(newCells)!;
+			this.cells.length = 0;
+			this.cells.push(...newCells);
+			diff.forEachAddedItem((atc: IterableChangeRecord<AbstractTableCell>) => this.subscribeToCell(atc.item));
 		});
+		// keeping the subsriptions in once place to make it easier to unregister everything upon destroy
+		this.subscriptions.push(changesSubscription);
 	}
 
+	/** @internal */
+	private subscribeToCell(target: AbstractTableCell) {
+		const clickSubscriber = target.teCellClick.subscribe((triggeredCell: AbstractTableCell) => {
+			const executor: TeExecutor = { row: null, cell: null };
+			executor.row = this;
+			executor.cell = triggeredCell;
+			this.teCellClick.emit(executor);
+		});
+		const blockSubscriber = target.teBlockNavigationEventEmitter.subscribe(() => {
+			this.teBlockNavigationEventEmitter.emit();
+		});
+		this.subscriptions.push(clickSubscriber);
+		this.subscriptions.push(blockSubscriber);
+	}
 	/** @internal */
 	public ngOnDestroy() {
 		if (this.subscriptions) this.subscriptions.forEach(s => s.unsubscribe());

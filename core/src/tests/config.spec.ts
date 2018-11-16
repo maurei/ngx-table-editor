@@ -1,4 +1,4 @@
-import { TableEditorConfig } from '../core/utils/config.service';
+import { TableEditorConfig } from '../utils/config.service';
 
 describe('TableEditorConfig', () => {
 	const config = new TableEditorConfig();
