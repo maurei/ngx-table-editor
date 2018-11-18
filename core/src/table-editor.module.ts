@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { TE_NAVIGATORS, AbstractNavigator, NavigationAction } from './navigators/navigator';
 import { KeyboardNavigator } from './navigators/keyboard-navigator';
 import { TemplateService } from './utils/template.service';
-import { TableEditorConfig } from './utils/config.service';
+import { TableEditorConfig, HTMLInputElementStyle } from './utils/config.service';
 import { RowChangeEvent } from './utils/row-change-event';
 
 const TABLE_EDITOR_DIRECTIVE_DECLARATIONS = [
@@ -34,8 +34,7 @@ const TABLE_EDITOR_DIRECTIVE_EXPORTS = [
 	TableEditorRowDirective,
 	InputTemplateComponent,
 	OnInitDirective,
-	AnchorDirective,
-	// TemplateService
+	AnchorDirective
 ];
 @NgModule({
 	imports: [FormsModule, ReactiveFormsModule, CommonModule],
@@ -62,5 +61,6 @@ export {
 	AbstractNavigator,
 	KeyboardNavigator,
 	TE_NAVIGATORS,
-	TemplateService
+	TemplateService,
+	HTMLInputElementStyle
 };

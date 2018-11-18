@@ -28,6 +28,7 @@ import { debounceTime, filter, mergeMap, switchMap, toArray } from 'rxjs/operato
 import { AbstractTableCell, TableEditorConfig, TemplateService } from '@ngx-table-editor/core';
 // import { AbstractTableCell, TableEditorConfig, TemplateService } from '../../../core/src/table-editor.module';
 
+
 /**
  * This is a fork of [ngx-bootstrap typeahead]{@link https://valor-software.com/ngx-bootstrap/#/typeahead}. It has been adjusted to also accept in the `NgModel` binding references to objects instead of plain values, and typeaheadEditable is set to false ([see this issue]{@link https://github.com/valor-software/ngx-bootstrap/issues/1894}). Other than that, check out the ngx-bootstrap documentation for usage details, or check out [the examples]{@link ../../demo/#/examples/supported-fields} on how to use it.
  */
@@ -49,6 +50,7 @@ import { AbstractTableCell, TableEditorConfig, TemplateService } from '@ngx-tabl
 	}
 })
 export class TypeaheadCellControlValueAccessor extends AbstractTableCell implements OnInit, OnDestroy {
+  private _identifier = Math.random().toString().slice(2,6);
 	/** @ignore */
 	@Input()
 	typeahead: any;
@@ -158,7 +160,8 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 			this.typeaheadAsync = false;
 		}
 
-		if (this.typeahead instanceof Observable) {
+		// if typeahead is a function, we're assuming it is a Observable factory.
+		if (this.typeahead instanceof Function) {
 			this.typeaheadAsync = true;
 		}
 
@@ -207,6 +210,7 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 	@HostListener('keyup', ['$event'])
 	_onChange(e: any): void {
 		if (this._container) {
+			// esc
 			if (e.keyCode === 27) {
 				this.teBlockNavigationEventEmitter.emit();
 				const value = this.inputValueFormatter(this.ngControl.control.value);
@@ -284,8 +288,6 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 	}
 	/** @ignore */
 	changeModel(match: TypeaheadMatch): void {
-		// const valueStr: string = match.value;
-		// this.renderer.setProperty(this['inputElement'].nativeElement, 'value', match.value);
 		this.setInputValue(match.value);
 		this.ngControl.viewToModelUpdate(match.item);
 		this.ngControl.control.setValue(match.item);
@@ -309,23 +311,25 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 	/** @ignore */
 	public onChange = (_: any) => {
 		/* HOW THE F does this work under the hood??? */
-	}
+	};
 	public registerOnChange(fn: (_: any) => void): void {
 		this.onChange = fn;
 	}
 	/** @ignore */
-	public registerOnTouched(fn: any): void {}
+	public registerOnTouched(fn: any): void {
+	}
+
 	/** @ignore */
-	public parser(value: any) {
+	public parser(value: any): any {
 		return this.ngControl.control.value;
 		// return new Date(value);
 	}
 	/** @ignore */
-	teAfterInputify() {
+	teAfterInputify(): any {
 		this._typeahead = this.cis.createLoader<TypeaheadContainerComponent>(this.element, this['innerViewContainer'], this.renderer);
 	}
 	/** @ignore */
-	public cellValueFormatter(value: any) {
+	public cellValueFormatter(value: any): any {
 		value = value === null ? '' : this.getOptionFromObject(value);
 		return value;
 	}
@@ -393,7 +397,9 @@ export class TypeaheadCellControlValueAccessor extends AbstractTableCell impleme
 			this.keyUpEventEmitter
 				.pipe(
 					debounceTime(this.typeaheadWaitMs),
-					switchMap(() => this.typeahead)
+					switchMap((val) => {
+						return this.typeahead(val)
+					})
 				)
 				.subscribe((matches: any) => {
 					this.finalizeAsyncCall(matches);
