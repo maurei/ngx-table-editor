@@ -1,3 +1,8 @@
+# DISCLAIMER:
+This repository is not maintained. It is also not completely finished, but the features that made it in should be relatively stable.
+I do still believe the idea behind this package is valuable.
+If you have interest in library, contact me. 
+
 # ngx-table-editor
 
 A library that transform dorky static HTML tables into cool dynamic editable components. Tested with Angular 6.1.
