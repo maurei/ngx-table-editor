@@ -1,6 +1,6 @@
 # DISCLAIMER:
 This repository is not maintained. It is also not completely finished, but the features that made it in should be relatively stable.
-I do still believe the idea behind this package is valuable.
+I do still believe the idea behind this package is valuable, so be sure to check out some examples in the doc.
 If you have interest in library, contact me. 
 
 # ngx-table-editor
