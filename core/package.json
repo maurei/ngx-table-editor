@@ -76,7 +76,7 @@
     "rxjs": "6.2.2",
     "rxjs-compat": "^6.2.0",
     "sass-loader": "7.0.1",
-    "shelljs": "0.8.1",
+    "shelljs": "0.8.5",
     "source-map-loader": "0.2.3",
     "to-string-loader": "1.1.5",
     "ts-loader": "4.2.0",
